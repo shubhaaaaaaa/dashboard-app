@@ -6,6 +6,7 @@ const Sidebar = () => {
       <h1 className="text-xl font-bold">Hospital</h1>
       <nav className="flex flex-col gap-2">
         <NavLink to="/" className="hover:underline">Dashboard</NavLink>
+        <NavLink to="/patients" className="hover:underline">Patients</NavLink>
       </nav>
     </aside>
   )
