@@ -1,76 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPatients } from '../features/patients/patientSlice';
-import type { RootState, AppDispatch } from '../redux/store';
-import Skeleton from 'react-loading-skeleton';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-type SortKey = 'firstName' | 'lastName' | 'email' | 'gender' | 'age';
+import Skeleton from 'react-loading-skeleton';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { usePatientsTable } from '../hooks/usePatientsTable';
 
 const PatientTable: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { data, loading, error, page  } = useSelector(
-    (state: RootState) => state.patients
-  );
+  const {
+    sortedData,
+    loading,
+    error,
+    page,
+    totalPages,
+    searchQuery,
+    genderFilter,
+    ageFilter,
+    setSearchQuery,
+    setGenderFilter,
+    setAgeFilter,
+    handleSort,
+    handlePageChange,
+  } = usePatientsTable();
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [genderFilter, setGenderFilter] = useState<string>('all');
-  const [ageFilter, setAgeFilter] = useState<string>('all');
-
-  const [sortConfig, setSortConfig] = useState<{
-    key: SortKey;
-    direction: 'asc' | 'desc';
-  }>({
-    key: 'firstName',
-    direction: 'asc',
-  });
-
-  useEffect(() => {
-    dispatch(getPatients(page));
-  }, [dispatch, page]);
-
-  const filteredData = data.filter((patient) => {
-    const matchesSearch =
-      `${patient.firstName} ${patient.lastName}`
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      patient.email.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesGenderFilter =
-      genderFilter === 'all' || patient.gender.toLowerCase() === genderFilter.toLowerCase();
-
-    const matchesAgeFilter =
-      ageFilter === 'all' ||
-      (ageFilter === 'under20' && patient.age < 20) ||
-      (ageFilter === '21to40' && patient.age >= 21 && patient.age <= 40) ||
-      (ageFilter === '41to60' && patient.age >= 41 && patient.age <= 60) ||
-      (ageFilter === 'over60' && patient.age > 60);
-
-    return matchesSearch && matchesGenderFilter && matchesAgeFilter;
-  });
-
-  const sortedData = [...filteredData].sort((a, b) => {
-    const aValue = a[sortConfig.key];
-    const bValue = b[sortConfig.key];
-
-    if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
-    if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
-    return 0;
-  });
-
-  const handleSort = (key: SortKey) => {
-    setSortConfig((prevConfig) => {
-      if (prevConfig.key === key) {
-        return {
-          key,
-          direction: prevConfig.direction === 'asc' ? 'desc' : 'asc',
-        };
-      }
-      return { key, direction: 'asc' };
-    });
-  };
-
-  if (loading) return <div className="text-center py-10 text-gray-500">Loading...</div>;
   if (error) return <div className="text-center py-10 text-red-500">{error}</div>;
 
   return (
@@ -110,27 +60,77 @@ const PatientTable: React.FC = () => {
         <table className="min-w-full bg-white text-sm">
           <thead className="bg-gray-100 text-gray-700">
             <tr>
-              <th className="py-3 px-4 text-left cursor-pointer" onClick={() => handleSort('firstName')}>Name</th>
-              <th className="py-3 px-4 text-left cursor-pointer" onClick={() => handleSort('email')}>Email</th>
-              <th className="py-3 px-4 text-left cursor-pointer" onClick={() => handleSort('gender')}>Gender</th>
-              <th className="py-3 px-4 text-left cursor-pointer" onClick={() => handleSort('age')}>Age</th>
+              <th className="py-3 px-4 text-left cursor-pointer" onClick={() => handleSort('firstName')}>
+                Name
+              </th>
+              <th className="py-3 px-4 text-left cursor-pointer" onClick={() => handleSort('email')}>
+                Email
+              </th>
+              <th className="py-3 px-4 text-left cursor-pointer" onClick={() => handleSort('gender')}>
+                Gender
+              </th>
+              <th className="py-3 px-4 text-left cursor-pointer" onClick={() => handleSort('age')}>
+                Age
+              </th>
             </tr>
           </thead>
           <tbody>
-            {sortedData.map((patient) => (
-              <tr key={patient.id} className="border-b hover:bg-gray-50">
-                <td className="py-3 px-4">
-                  <Link to={`/patients/${patient.id}`} className="text-blue-600 hover:underline">
-                    {`${patient.firstName} ${patient.lastName}`}
-                  </Link>
-                </td>
-                <td className="py-3 px-4">{patient.email}</td>
-                <td className="py-3 px-4">{patient.gender}</td>
-                <td className="py-3 px-4">{patient.age}</td>
-              </tr>
-            ))}
+            {loading ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <tr key={index} className="border-b hover:bg-gray-50">
+                  <td className="py-3 px-4">
+                    <Skeleton width={150} height={20} />
+                  </td>
+                  <td className="py-3 px-4">
+                    <Skeleton width={200} height={20} />
+                  </td>
+                  <td className="py-3 px-4">
+                    <Skeleton width={100} height={20} />
+                  </td>
+                  <td className="py-3 px-4">
+                    <Skeleton width={50} height={20} />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              sortedData.map((patient) => (
+                <tr key={patient.id} className="border-b hover:bg-gray-50">
+                  <td className="py-3 px-4">
+                    <Link to={`/patients/${patient.id}`} className="text-blue-600 hover:underline">
+                      {`${patient.firstName} ${patient.lastName}`}
+                    </Link>
+                  </td>
+                  <td className="py-3 px-4">{patient.email}</td>
+                  <td className="py-3 px-4">{patient.gender}</td>
+                  <td className="py-3 px-4">{patient.age}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center items-center gap-6 mt-6">
+        <button
+          onClick={() => handlePageChange(page - 1)}
+          disabled={page === 1}
+          className="p-2 rounded-full hover:bg-gray-100 transition disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          <ChevronLeftIcon className="h-5 w-5 text-gray-600" />
+        </button>
+
+        <span className="text-sm text-gray-500">
+          {page} / {totalPages}
+        </span>
+
+        <button
+          onClick={() => handlePageChange(page + 1)}
+          disabled={page === totalPages}
+          className="p-2 rounded-full hover:bg-gray-100 transition disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          <ChevronRightIcon className="h-5 w-5 text-gray-600" />
+        </button>
       </div>
     </div>
   );
