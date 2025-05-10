@@ -5,7 +5,12 @@ import type { RootState } from '../redux/store';
 
 const Pagination: React.FC = () => {
   const dispatch = useDispatch();
-  const { page } = useSelector((state: RootState) => state.patients);
+  const { page, totalPatients, patientsPerPage } = useSelector(
+    (state: RootState) => state.patients
+  );
+
+  // Calculate totalPages based on totalPatients and patientsPerPage
+  const totalPages = Math.ceil(totalPatients / patientsPerPage);
 
   const handlePageChange = (newPage: number) => {
     dispatch(setPage(newPage));
@@ -20,10 +25,11 @@ const Pagination: React.FC = () => {
       >
         Previous
       </button>
-      <span className="px-4 py-2">{`Page ${page}`}</span>
+      <span className="px-4 py-2">{`Page ${page} of ${totalPages}`}</span>
       <button
         onClick={() => handlePageChange(page + 1)}
-        className="px-4 py-2 bg-blue-500 text-white rounded"
+        disabled={page === totalPages}
+        className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
       >
         Next
       </button>

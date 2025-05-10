@@ -17,6 +17,8 @@ interface PatientState {
   loading: boolean;
   error: string | null;
   page: number;
+  totalPatients: number; // Total number of patients
+  patientsPerPage: number; 
 }
 
 // Initial state
@@ -25,16 +27,21 @@ const initialState: PatientState = {
   loading: false,
   error: null,
   page: 1,
+  totalPatients: 0,
+  patientsPerPage: 10,
 };
 
-// Async thunk to fetch patients
-export const getPatients = createAsyncThunk<Patient[], number>(
+// Async thunk to fetch patients with total number of patients (totalPatients)
+export const getPatients = createAsyncThunk<
+  { patients: Patient[]; totalPatients: number }, // Return both patients and totalPatients
+  number // The page number to fetch
+>(
   'patients/getPatients',
   async (page, thunkAPI) => {
     try {
       const response = await fetch(`https://dummyjson.com/users?page=${page}&limit=10`);
       const data = await response.json();
-      return data.users;
+      return { patients: data.users, totalPatients: data.total }; // Assuming API returns 'total' field
     } catch (error) {
       return thunkAPI.rejectWithValue('Failed to load patient data');
     }
@@ -59,7 +66,8 @@ const patientSlice = createSlice({
       })
       .addCase(getPatients.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload.patients;
+        state.totalPatients = action.payload.totalPatients; // Set the total number of patients
       })
       .addCase(getPatients.rejected, (state, action) => {
         state.loading = false;
@@ -67,7 +75,6 @@ const patientSlice = createSlice({
       });
   },
 });
-
 
 // Export the setPage action to use it in the component
 export const { setPage } = patientSlice.actions;
