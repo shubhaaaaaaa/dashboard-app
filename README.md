@@ -72,7 +72,7 @@ Below are some screenshots of the project:
    ![Patient Data Screenshot](./screenshots/table.png)
 
 3. **Error Handling**:
-   ![Error Screenshot](./screenshots/errors.png)
+   ![Error Screenshot](./screenshots/error.png)
 
 ## Performance Optimizations
 
