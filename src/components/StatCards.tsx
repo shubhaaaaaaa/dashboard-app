@@ -19,7 +19,7 @@ const StatCards = () => {
           <div className="flex items-center gap-4">
             <div className="bg-muted p-4 rounded-xl">{iconMap[stat.icon]}</div>
             <div>
-              <h3 className="text-lg font-semibold text-secondary">{stat.title}</h3>
+              <p className="text-lg font-semibold text-secondary">{stat.title}</p>
               <p className="text-2xl font-bold text-primary">{stat.value}</p>
             </div>
           </div>

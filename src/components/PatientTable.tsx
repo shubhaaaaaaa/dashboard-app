@@ -33,7 +33,11 @@ const PatientTable: React.FC = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+        <label htmlFor="genderFilter" className="sr-only">
+          Filter by Gender
+        </label>
         <select
+          id="genderFilter"
           className="border border-gray-300 rounded-xl px-4 py-2 w-full sm:w-1/4"
           value={genderFilter}
           onChange={(e) => setGenderFilter(e.target.value)}
@@ -43,7 +47,12 @@ const PatientTable: React.FC = () => {
           <option value="female">Female</option>
           <option value="other">Other</option>
         </select>
+
+        <label className="sr-only" htmlFor="ageFilter">
+          Filter by Age
+        </label>
         <select
+          id="ageFilter"
           className="border border-gray-300 rounded-xl px-4 py-2 w-full sm:w-1/4"
           value={ageFilter}
           onChange={(e) => setAgeFilter(e.target.value)}
@@ -54,6 +63,7 @@ const PatientTable: React.FC = () => {
           <option value="41to60">41-60</option>
           <option value="over60">Over 60</option>
         </select>
+
       </div>
 
       <div className="overflow-x-auto rounded-xl">
@@ -116,6 +126,7 @@ const PatientTable: React.FC = () => {
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
           className="p-2 rounded-full hover:bg-gray-100 transition disabled:opacity-30 disabled:cursor-not-allowed"
+          aria-label="Previous page"
         >
           <ChevronLeftIcon className="h-5 w-5 text-gray-600" />
         </button>
@@ -128,6 +139,7 @@ const PatientTable: React.FC = () => {
           onClick={() => handlePageChange(page + 1)}
           disabled={page === totalPages}
           className="p-2 rounded-full hover:bg-gray-100 transition disabled:opacity-30 disabled:cursor-not-allowed"
+          aria-label="Next page"
         >
           <ChevronRightIcon className="h-5 w-5 text-gray-600" />
         </button>
