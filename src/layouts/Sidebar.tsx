@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import {
   HomeIcon,
@@ -57,8 +58,10 @@ const Sidebar = ({
               </button>
             </div>
 
-            <img src={Logo} alt="Logo" width={170} className="mb-8" />
-
+            <Link to="/">
+              <img src={Logo} alt="Logo" width={170} className="mb-8" />
+            </Link>
+            
             <nav className="flex flex-col space-y-6">
               {navSections.map(({ title, items }) => (
                 <div key={title}>
