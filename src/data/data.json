@@ -1,0 +1,39 @@
+{
+  "departmentData": [
+    { "dept": "Cardiology", "count": 40 },
+    { "dept": "Neurology", "count": 25 },
+    { "dept": "Orthopedics", "count": 30 },
+    { "dept": "General", "count": 50 }
+  ],
+
+  "patientsByGender": [
+    { "name": "Male", "value": 45 },
+    { "name": "Female", "value": 50 },
+    { "name": "Other", "value": 5 }
+  ],
+
+  "appointmentsPerDay": [
+    { "day": "Mon", "patients": 30 },
+    { "day": "Tue", "patients": 50 },
+    { "day": "Wed", "patients": 45 },
+    { "day": "Thu", "patients": 60 },
+    { "day": "Fri", "patients": 35 },
+    { "day": "Sat", "patients": 40 },
+    { "day": "Sun", "patients": 20 }
+  ],
+
+  "statData": [
+    { "title": "Total Patients", "value": 1200, "icon": "UserIcon" },
+    { "title": "Appointments", "value": 50, "icon": "CalendarIcon" },
+    { "title": "Admissions", "value": 30, "icon": "HeartIcon" },
+    { "title": "Discharges", "value": 20, "icon": "ArrowTrendingUpIcon" }
+  ],
+
+  "statistics": [
+    {
+      "title": "Scheduled Visits",
+      "value": 1245,
+      "icon": "UserIcon"
+    }
+  ]
+}

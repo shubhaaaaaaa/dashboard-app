@@ -1,21 +1,23 @@
-import { ArrowTrendingUpIcon, UserIcon, CalendarIcon, HeartIcon } from "@heroicons/react/24/outline"; // Heroicons
+import { ArrowTrendingUpIcon, UserIcon, CalendarIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { Card } from "./ui/card";
+import statData from "../data/data.json";
+import type { StatData } from "../types/chart"; 
+import type { JSX } from "react";
 
-// Dummy Data for Example
-const statData = [
-  { title: "Total Patients", value: 1200, icon: <UserIcon className="h-6 w-6 text-primary" /> },
-  { title: "Today's Appointments", value: 50, icon: <CalendarIcon className="h-6 w-6 text-primary" /> },
-  { title: "Admissions", value: 30, icon: <HeartIcon className="h-6 w-6 text-primary" /> },
-  { title: "Discharges", value: 20, icon: <ArrowTrendingUpIcon className="h-6 w-6 text-primary" /> },
-];
+const iconMap: { [key: string]: JSX.Element } = {
+  "UserIcon": <UserIcon className="h-6 w-6 text-secondary" />,
+  "CalendarIcon": <CalendarIcon className="h-6 w-6 text-secondary" />,
+  "HeartIcon": <HeartIcon className="h-6 w-6 text-secondary" />,
+  "ArrowTrendingUpIcon": <ArrowTrendingUpIcon className="h-6 w-6 text-secondary" />
+};
 
 const StatCards = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-      {statData.map((stat, index) => (
+      {statData.statData.map((stat: StatData, index: number) => (
         <Card key={index} className="flex items-center justify-between p-6 bg-white rounded-2xl shadow-md" title={""}>
           <div className="flex items-center gap-4">
-            <div className="bg-muted p-4 rounded-xl">{stat.icon}</div>
+            <div className="bg-muted p-4 rounded-xl">{iconMap[stat.icon]}</div>
             <div>
               <h3 className="text-lg font-semibold text-secondary">{stat.title}</h3>
               <p className="text-2xl font-bold text-primary">{stat.value}</p>
