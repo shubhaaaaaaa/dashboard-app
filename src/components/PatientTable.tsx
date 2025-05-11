@@ -96,7 +96,7 @@ const PatientTable: React.FC = () => {
               sortedData.map((patient) => (
                 <tr key={patient.id} className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">
-                    <Link to={`/patients/${patient.id}`} className="text-blue-600 hover:underline">
+                    <Link to={`/patients/${patient.id}`} className="text-secondary hover:underline">
                       {`${patient.firstName} ${patient.lastName}`}
                     </Link>
                   </td>
