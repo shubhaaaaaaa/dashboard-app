@@ -17,32 +17,30 @@ const Dashboard = () => {
       </div>
 
       <PatientTable />
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-  <div className="bg-white p-6 rounded-2xl shadow-md">
-    <DepartmentBarChart />
-  </div>
 
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div className="bg-white p-6 rounded-2xl shadow-md md:col-span-1 lg:col-span-1">
-      <div className="w-full h-full overflow-hidden">
-        <div className="h-full w-full overflow-auto">
-          <CalendarCard />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-2xl shadow-md">
+          <DepartmentBarChart />
         </div>
-      </div>
-    </div>
 
-    <div className="grid grid-cols-1 gap-6">
-      <div>
-        <StatisticsCard />
-      </div>
-      <div>
-        <StatisticsCard />
-      </div>
-    </div>
-  </div>
-</div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-2">
+          <div className="bg-white p-6 rounded-2xl shadow-md overflow-auto">
+            <div className="w-full max-w-full h-full">
+              <CalendarCard />
+            </div>
+          </div>
 
+          <div className="grid grid-cols-1 gap-6">
+            <div>
+              <StatisticsCard />
+            </div>
+            <div>
+              <StatisticsCard />
+            </div>
+          </div>
+        </div>
 
+      </div>
     </div>
   );
 };

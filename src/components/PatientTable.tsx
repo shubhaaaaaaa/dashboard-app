@@ -25,7 +25,7 @@ const PatientTable: React.FC = () => {
 
   return (
     <div className="p-6 bg-white rounded-2xl shadow-md">
-      <div className="flex flex-wrap gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 mb-6">
         <input
           type="text"
           className="border border-gray-300 rounded-xl px-4 py-2 w-full sm:w-1/3"
@@ -56,7 +56,7 @@ const PatientTable: React.FC = () => {
         </select>
       </div>
 
-      <div className="overflow-x-auto rounded-xl">
+      <div className="w-full overflow-x-auto rounded-xl">
         <table className="min-w-full bg-white text-sm">
           <thead className="bg-gray-100 text-gray-700">
             <tr>
@@ -110,8 +110,9 @@ const PatientTable: React.FC = () => {
         </table>
       </div>
 
+
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-6 mt-6">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mt-6">
         <button
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
