@@ -33,7 +33,7 @@ const patientSlice = createSlice({
         state.data = action.payload.patients;
         state.totalPatients = action.payload.totalPatients;
       })
-      .addCase(getPatients.rejected, (state, action) => {
+      .addCase(getPatients.rejected, (state) => {
         state.loading = false;
         state.error = 'Failed to load patients';
       });
