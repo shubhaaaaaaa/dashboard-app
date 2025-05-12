@@ -11,7 +11,7 @@ This project is a hospital management dashboard application that provides an ove
 - **Type safety**: Implemented with TypeScript
 - **UI**: Built with ShadCN, TailwindCSS, and Heroicons
 - **State management**: Redux Toolkit with RTK Query
-- **Charts & Data Visualizations**: Bar, Line, and Pie Charts
+- **Charts & Data Visualizations**: Bar, Line, and Pie Charts using data from local .json files
 - **Accessibility**: Used `aria-label`, `alt` attributes, and semantic elements
 
 ## Dev Practices
